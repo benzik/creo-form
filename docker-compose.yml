@@ -22,4 +22,7 @@ services:
 
 networks:
   caddy_network:
-    external: true  # Используем существующую сеть Caddy
+    name: caddy_network
+    driver: bridge
+    # Сеть будет создана автоматически, если её нет
+    # Если она уже существует, будет использована существующая

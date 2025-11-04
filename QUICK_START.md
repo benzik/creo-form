@@ -21,22 +21,20 @@ docker logs -f visual-form-editor
 ## 🖥️ На сервере через Portainer
 
 ```bash
-# 1. Убедитесь, что есть общая сеть
-docker network ls | grep caddy
-
-# 2. Создайте сеть, если нужно
-docker network create caddy_network
-
-# 3. В Portainer:
+# 1. В Portainer:
 # - Stacks → Add stack
 # - Repository: https://github.com/benzik/creo-form
 # - Compose path: docker-compose.yml
 # - Deploy
+# Сеть caddy_network создастся автоматически!
 
-# 4. Проверить статус
+# 2. Подключить Caddy к этой сети (если Caddy уже работает)
+docker network connect caddy_network caddy
+
+# 3. Проверить статус
 docker ps | grep visual-form-editor
 
-# 5. Настроить Caddy (см. CADDY.md)
+# 4. Настроить Caddy (см. CADDY.md)
 ```
 
 ## 🖥️ На сервере (ручное развертывание)
@@ -45,11 +43,11 @@ docker ps | grep visual-form-editor
 # Перейти в директорию проекта
 cd /opt/visual-form-editor
 
-# Создать сеть (если нужно)
-docker network create caddy_network
-
-# Запустить
+# Запустить (сеть создастся автоматически)
 sudo docker-compose up -d --build
+
+# Подключить Caddy к сети (если нужно)
+docker network connect caddy_network caddy
 
 # Проверить статус
 sudo docker ps
@@ -57,7 +55,7 @@ sudo docker ps
 # Проверить логи
 sudo docker logs visual-form-editor
 
-# Открыть порт в файрволе (опционально)
+# Открыть порт в файрволе (опционально, если нужен прямой доступ)
 sudo ufw allow 8085/tcp
 sudo ufw reload
 ```
