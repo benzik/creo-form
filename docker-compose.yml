@@ -7,11 +7,13 @@ services:
       dockerfile: Dockerfile
     container_name: visual-form-editor
     ports:
-      # Маппим внутренний порт 80 на внешний 8085
+      # Маппим внутренний порт 80 на внешний 8085 (для прямого доступа)
       - "8085:80"
     restart: unless-stopped
     networks:
       - form-editor-network
+      # Раскомментируйте следующую строку, если используете Caddy:
+      # - caddy_network
     # Health check - проверка работы nginx
     healthcheck:
       test: ["CMD", "sh", "-c", "pgrep nginx"]
@@ -23,3 +25,7 @@ services:
 networks:
   form-editor-network:
     driver: bridge
+  # Раскомментируйте если используете Caddy:
+  # caddy_network:
+  #   external: true
+  #   name: caddy_caddy  # или caddy_default - проверьте: docker network ls

@@ -71,35 +71,122 @@ ports:
 
 ## 🌐 Настройка Caddy (проксирование на поддомен)
 
-После развертывания в Portainer настройте Caddy на сервере:
+### Шаг 1: Добавьте контейнер в сеть Caddy
 
-### Caddyfile:
+В Portainer откройте стек и добавьте сеть Caddy:
+
+1. **Stacks** → `visual-form-editor` → **Editor**
+2. Раскомментируйте строки с `caddy_network`:
+
+```yaml
+networks:
+  - form-editor-network
+  - caddy_network  # ← Раскомментировать
+```
+
+И в секции networks внизу:
+
+```yaml
+networks:
+  form-editor-network:
+    driver: bridge
+  caddy_network:  # ← Раскомментировать
+    external: true
+    name: caddy_caddy  # Проверьте имя: docker network ls
+```
+
+3. **Update the stack**
+
+### Шаг 2: Узнайте имя сети Caddy
+
+```bash
+docker network ls | grep caddy
+```
+
+Обычно это `caddy_caddy` или `caddy_default`. Укажите правильное имя в `docker-compose.yml`
+
+### Шаг 3: Настройте Caddyfile
+
+**ВАЖНО:** Используйте имя контейнера и внутренний порт 80!
 
 ```caddy
 forms.your-domain.com {
-    reverse_proxy localhost:8085
+    reverse_proxy visual-form-editor:80
+    #              ↑имя контейнера  ↑внутренний порт (НЕ 8085!)
     
     # Опционально: логи
     log {
         output file /var/log/caddy/forms.log
     }
     
-    # Опционально: сжатие
+    # Опционально: заголовки безопасности
+    header {
+        Strict-Transport-Security "max-age=31536000;"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+    }
+    
     encode gzip
 }
 ```
 
-### Применение конфигурации:
+### Шаг 4: Примените конфигурацию
 
 ```bash
-# Перезагрузка Caddy
-sudo systemctl reload caddy
+# Если Caddy в Docker
+docker exec caddy caddy reload
 
-# Или если Caddy в Docker
-docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+# Если Caddy установлен на хосте
+sudo systemctl reload caddy
+```
+
+### Шаг 5: Проверьте
+
+```bash
+# Проверьте доступность из контейнера Caddy
+docker exec caddy wget -qO- http://visual-form-editor:80 | head
+
+# Должен вывести HTML код страницы
 ```
 
 ✅ Готово! Приложение будет доступно по адресу `https://forms.your-domain.com`
+
+---
+
+## 🔍 Troubleshooting Caddy
+
+### Ошибка "dial tcp: lookup visual-form-editor"
+
+**Причина:** Контейнеры не в одной сети
+
+**Решение:**
+```bash
+# Проверьте сети контейнера
+docker inspect visual-form-editor | grep NetworkMode
+
+# Добавьте контейнер в сеть Caddy вручную
+docker network connect caddy_caddy visual-form-editor
+```
+
+### Ошибка "connection refused"
+
+**Причина:** Неверный порт в Caddyfile
+
+**Решение:** Используйте порт **80** (внутренний), а не 8085:
+```caddy
+reverse_proxy visual-form-editor:80  # ← Правильно
+reverse_proxy localhost:8085         # ← Неправильно для Docker сети
+```
+
+### Как узнать правильное имя сети?
+
+```bash
+# Посмотрите все сети
+docker network ls
+
+# Посмотрите детали сети Caddy
+docker network inspect caddy_caddy
+```
 
 ---
 
