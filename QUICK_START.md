@@ -18,11 +18,35 @@ docker logs -f visual-form-editor
 
 ---
 
-## 🖥️ На сервере (после загрузки файлов)
+## 🖥️ На сервере через Portainer
+
+```bash
+# 1. Убедитесь, что есть общая сеть
+docker network ls | grep caddy
+
+# 2. Создайте сеть, если нужно
+docker network create caddy_network
+
+# 3. В Portainer:
+# - Stacks → Add stack
+# - Repository: https://github.com/benzik/creo-form
+# - Compose path: docker-compose.yml
+# - Deploy
+
+# 4. Проверить статус
+docker ps | grep visual-form-editor
+
+# 5. Настроить Caddy (см. CADDY.md)
+```
+
+## 🖥️ На сервере (ручное развертывание)
 
 ```bash
 # Перейти в директорию проекта
 cd /opt/visual-form-editor
+
+# Создать сеть (если нужно)
+docker network create caddy_network
 
 # Запустить
 sudo docker-compose up -d --build
@@ -33,10 +57,34 @@ sudo docker ps
 # Проверить логи
 sudo docker logs visual-form-editor
 
-# Открыть порт в файрволе
+# Открыть порт в файрволе (опционально)
 sudo ufw allow 8085/tcp
 sudo ufw reload
 ```
+
+---
+
+## 🔧 Настройка Caddy для поддомена
+
+**Добавьте в Caddyfile:**
+
+```caddy
+forms.your-domain.com {
+    reverse_proxy visual-form-editor:8085
+}
+```
+
+**Перезагрузите Caddy:**
+
+```bash
+# Docker
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+
+# Systemd
+sudo systemctl reload caddy
+```
+
+📖 **Подробнее:** [CADDY.md](CADDY.md)
 
 ---
 
@@ -46,7 +94,7 @@ sudo ufw reload
 
 ```yaml
 ports:
-  - "9090:80"  # Меняйте 9090 на нужный порт
+  - "9090:8085"  # Внешний:Внутренний
 ```
 
 ---

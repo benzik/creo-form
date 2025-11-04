@@ -16,8 +16,8 @@ COPY data.js .
 # Копируем кастомную конфигурацию nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Экспонируем порт 80 (внутри контейнера)
-EXPOSE 80
+# Экспонируем порт 8085 (внутри контейнера)
+EXPOSE 8085
 
 # Запускаем nginx
 CMD ["nginx", "-g", "daemon off;"]
