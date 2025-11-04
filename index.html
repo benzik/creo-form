@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Визуальный редактор формы</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&family=Lato&family=Lobster&family=Lora&family=Merriweather&family=Montserrat&family=Nunito+Sans&family=Open+Sans&family=Oswald&family=PT+Serif&family=Pacifico&family=Playfair+Display&family=Poppins&family=Roboto:wght@400;700;900&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="edit-banner">вернуться к редактированию</div>
+
+    <!-- Модальное окно помощи -->
+    <div id="help-modal" class="hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Справка по редактору</h2>
+            
+            <h4>Основной принцип</h4>
+            <p>Этот редактор позволяет визуально настраивать внешний вид формы. Все изменения сохраняются автоматически. Вы можете перемещать, изменять размер и редактировать текст большинства элементов прямо в окне предпросмотра.</p>
+            
+            <h4>Панель управления (слева)</h4>
+            <ul>
+                <li><strong>Страна:</strong> Выбор страны меняет язык, валюту, телефонный код и флаг на форме.</li>
+                <li><strong>Текстовый редактор:</strong> Этот блок становится активным, когда вы кликаете на любой текст в форме. Позволяет менять начертание (<b>B</b>, <i>I</i>, <u>U</u>), цвет, размер и шрифт. Изменения применяются к выделенному тексту, или ко всему блоку, если ничего не выделено.</li>
+                <li><strong>Объекты:</strong> Здесь собраны инструменты для управления элементами формы.
+                    <ul>
+                        <li><small><strong>+ добавить текст:</strong> Создает новый текстовый блок на форме.</small></li>
+                        <li><small><strong>- удалить текст:</strong> Удаляет выбранный текстовый блок.</small></li>
+                        <li><small><strong>Добавить продукт:</strong> Позволяет загрузить изображение для товара.</small></li>
+                        <li><small><strong>Подобрать имя и номер:</strong> Генерирует случайные данные для полей "Имя" и "Телефон" на основе выбранной страны.</small></li>
+                        <li><small><strong>Заменить флаг:</strong> Позволяет загрузить своё изображение вместо стандартного флага.</small></li>
+                         <li><small><strong>Переключатели "Таймер" и "Флаг":</strong> Позволяют скрыть или показать эти элементы на форме.</small></li>
+                    </ul>
+                </li>
+                 <li><strong>Сохраненные пресеты:</strong> Позволяет сохранять и загружать полный дизайн формы. Введите имя и нажмите "Сохранить", чтобы создать пресет. Выберите пресет из списка и нажмите "Загрузить", чтобы его применить.</li>
+            </ul>
+
+            <h4>Окно предпросмотра (справа)</h4>
+             <ul>
+                <li><strong>Перемещение:</strong> Наведите курсор на элемент, зажмите левую кнопку мыши и перетаскивайте.</li>
+                <li><strong>Редактирование текста:</strong> Просто кликните на любой текст, чтобы начать его редактировать.</li>
+                <li><strong>Изменение размера:</strong> Кликните на изображение продукта, чтобы появились маркеры по углам. Потяните за них, чтобы изменить размер.</li>
+            </ul>
+
+            <h4>Анимация и сброс</h4>
+             <ul>
+                <li><strong>Запустить анимацию:</strong> Переводит форму в режим просмотра, имитируя ввод данных и нажатие кнопки. Чтобы вернуться, подведите курсор к верху экрана и нажмите на появившийся баннер.</li>
+                <li><strong>Сбросить редактирование:</strong> Возвращает редактор к исходному состоянию (перезагружает страницу). Не удаляет сохраненные пресеты.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="controls">
+            <div class="controls-header">
+                 <h2>Настройки</h2>
+                 <div id="history-buttons">
+                    <button id="undo-button" title="Отменить (Ctrl+Z)" disabled>⟲</button>
+                    <button id="redo-button" title="Вернуть (Ctrl+Y)" disabled>⟳</button>
+                </div>
+            </div>
+            
+            <!-- СТАТИЧНЫЙ ВЕРХНИЙ БЛОК -->
+            <label for="ctrl-region-input">Страна:</label>
+            <div id="region-input-wrapper">
+                <input type="text" id="ctrl-region-input" list="country-list" autocomplete="off">
+                <span id="clear-region-button" class="hidden">&times;</span>
+            </div>
+            <datalist id="country-list"></datalist>
+
+            <!-- БЛОК 1: ТЕКСТОВЫЙ РЕДАКТОР -->
+            <div class="accordion-item">
+                <h3 class="accordion-header active">Текстовый редактор <span class="accordion-arrow"></span></h3>
+                <div class="accordion-content active">
+                    <p>Кликните на текст в окне предпросмотра, чтобы его изменить.</p>
+                    <div id="format-buttons" class="disabled">
+                        <button data-command="bold"><b>B</b></button>
+                        <button data-command="italic"><i>I</i></button>
+                        <button data-command="underline"><u>U</u></button>
+                        <button data-command="strikethrough"><s>S</s></button>
+                        <input type="color" id="ctrl-color" value="#333333" title="Цвет текста">
+                        <input type="number" id="ctrl-font-size" value="16" min="8" max="72" title="Размер шрифта">
+                        <select id="ctrl-font">
+                            <option value="Roboto">Roboto</option>
+                            <option value="Open Sans">Open Sans</option>
+                            <option value="Lato">Lato</option>
+                            <option value="Montserrat">Montserrat</option>
+                            <option value="Poppins">Poppins</option>
+                            <option value="Nunito Sans">Nunito Sans</option>
+                            <option value="Source Sans Pro">Source Sans Pro</option>
+                            <option value="Oswald">Oswald</option>
+                            <option value="Bebas Neue">Bebas Neue</option>
+                            <option value="Lora">Lora (Serif)</option>
+                            <option value="Merriweather">Merriweather (Serif)</option>
+                            <option value="Playfair Display">Playfair Display (Serif)</option>
+                            <option value="PT Serif">PT Serif</option>
+                            <option value="Lobster">Lobster (Script)</option>
+                            <option value="Pacifico">Pacifico (Script)</option>
+                            <option value="Caveat">Caveat (Handwriting)</option>
+                            <option value="Arial">Arial (System)</option>
+                            <option value="Times New Roman">Times New Roman (System)</option>
+                            <option value="Courier New">Courier New (System)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- БЛОК 2: ОБЪЕКТЫ -->
+            <div class="accordion-item">
+                <h3 class="accordion-header">Объекты <span class="accordion-arrow"></span></h3>
+                <div class="accordion-content">
+                     <div class="text-actions">
+                        <button id="add-text-button">+ добавить текст</button>
+                        <button id="delete-text-button" class="danger" disabled>- удалить текст</button>
+                    </div>
+                    <button id="add-product-button">Добавить продукт</button>
+                    <button id="generate-data-button">Подобрать имя и номер</button>
+                    <button id="replace-flag-button">Заменить флаг</button>
+                    <div class="control-toggles">
+                        <label>Таймер: 
+                            <svg id="timer-toggle" class="control-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </label>
+                        <label>Флаг: 
+                            <svg id="flag-toggle" class="control-icon dimmed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </label>
+                    </div>
+                    <label for="ctrl-timer-input">Начальное время таймера (ММ:СС):</label>
+                    <input type="text" id="ctrl-timer-input" value="09:59">
+                    <label for="ctrl-timer-font-size">Размер шрифта таймера (px):</label>
+                    <input type="number" id="ctrl-timer-font-size" value="40" min="12" max="120">
+                </div>
+            </div>
+
+            <!-- БЛОК 3: СОХРАНЕННЫЕ ПРЕСЕТЫ -->
+            <div class="accordion-item">
+                 <h3 class="accordion-header">Сохраненные пресеты <span class="accordion-arrow"></span></h3>
+                 <div class="accordion-content">
+                    <label for="format-presets">Ваши пресеты:</label>
+                    <select id="format-presets"></select>
+                    <div class="text-actions" style="gap: 5px; flex-wrap: wrap;">
+                        <button id="save-format-button" class="secondary" style="flex-grow: 1;">Сохранить</button>
+                        <button id="load-format-button" class="secondary" style="flex-grow: 1;">Загрузить</button>
+                        <button id="delete-format-button" class="secondary danger" style="flex-grow: 1;">Удалить</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- СТАТИЧНЫЙ НИЖНИЙ БЛОК -->
+            <hr style="margin-top: 25px;">
+            <label for="ctrl-animation-duration">Хронометраж анимации (сек):</label>
+            <input type="number" id="ctrl-animation-duration" value="5" min="1">
+            <button id="ready-button">Запустить анимацию</button>
+            <button id="reset-button" class="secondary">Сбросить редактирование</button>
+            
+            <button id="help-button">?</button>
+        </div>
+
+        <div class="preview">
+            <div class="form-wrapper">
+                <div id="snap-guide"></div>
+                <div id="top-text" class="draggable editable-text">
+                    <strong>HURRY UP!</strong> Promotional packages will run out soon.<br>
+                    <strong>Update:</strong> only <span class="highlight">17</span> units available for today
+                </div>
+                <div id="product-area" class="draggable resizable">
+                    <div class="image-placeholder"></div>
+                    <input type="file" id="ctrl-image" accept="image/*" class="hidden">
+                    <div class="resize-handle tl"></div>
+                    <div class="resize-handle tr"></div>
+                    <div class="resize-handle bl"></div>
+                    <div class="resize-handle br"></div>
+                </div>
+                <h1 id="preview-discount" class="draggable editable-text">-79% OFF</h1>
+                
+                <p id="price-area" class="draggable editable-text price">
+                    <span class="price-old">$280</span>
+                    <span class="price-new">$59</span>
+                </p>
+
+                <p id="timer-label" class="draggable editable-text">до конца акции</p>
+                <div id="preview-timer" class="draggable timer">09:59</div>
+                
+                <label id="name-label" class="draggable editable-text">Your name:</label>
+                <div id="preview-name" class="draggable editable-text simulated-input">Имя</div>
+
+                <label id="phone-label" class="draggable editable-text">Your phone:</label>
+                <div id="phone-input-container" class="draggable phone-input-wrapper">
+                    <img id="preview-flag" class="hidden" alt="flag">
+                    <input type="text" id="preview-phone" value="+7">
+                </div>
+                
+                <button id="preview-button" class="draggable editable-text">PLACE ORDER</button>
+                <p id="bottom-text" class="draggable editable-text">*The discount is valid when requesting a treatment package</p>
+                <input type="file" id="ctrl-flag" accept="image/*" class="hidden">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

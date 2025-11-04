@@ -1,0 +1,25 @@
+name: visual-form-editor-project
+
+services:
+  form-editor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: visual-form-editor
+    ports:
+      # Маппим внутренний порт 80 на внешний 8085
+      - "8085:80"
+    restart: unless-stopped
+    networks:
+      - form-editor-network
+    # Health check - проверка работы nginx
+    healthcheck:
+      test: ["CMD", "sh", "-c", "pgrep nginx"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  form-editor-network:
+    driver: bridge
