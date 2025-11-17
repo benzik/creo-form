@@ -90,4 +90,165 @@ let countryData = {
 "eo": { "name": "Эсперанто", "flagCode": "eo", "currency": "₷", "phoneCode": "", "sampleNames": ["Ludoviko Zamenhof", "Karlo Píĉ", "Johano Valano", "Georgo Kamaĉo", "Kálmán Kalocsay", "Marta Zamenhof", "Sofia Zamenhof", "Elvira Liven", "Marjorie Boulton", "Hilda Dresen"], "samplePhones": [], "translations": { "top_text": "<strong>RAPIDU!</strong> Promociaj aroj baldaŭ finiĝos.<br><strong>Ĝisdatigo:</strong> Nur <span class='highlight'>17</span> ekzempleroj restas ĝis hodiaŭ.", "discount_text": "-79% RABATO", "timer_label": "ĝis la fino de la promocio", "name_label": "Via nomo:", "name_placeholder": "Nomo", "phone_label": "Via telefono:", "submit_button": "FARU MENDOJN", "bottom_text": "*La rabato validas ĉe mendado de kuracado.", "new_text_placeholder": "Via teksto" } },    "et": { "name": "Эстонский", "flagCode": "ee", "currency": "€", "phoneCode": "+372", "sampleNames": ["Rasmus Tamm", "Oliver Kask", "Markus Ivanov", "Artur Saar", "Sander Sepp", "Sofia Kuusk", "Mia Mägi", "Emily Lepik", "Nora Kukk", "Lenna Rebane"], "samplePhones": ["55 123 456", "56 987 654", "53 234 567", "58 876 543", "51 345 678", "55 765 432", "56 567 890", "53 112 233", "58 445 566", "51 778 899"], "translations": { "top_text": "<strong>KIIRUSTA!</strong> Kampaaniakomplektide pakkumine lõpeb peagi.<br><strong>Värskendus:</strong> Tänase seisuga on alles vaid <span class='highlight'>17</span> ühikut.", "discount_text": "-79% SOODUSTUST", "timer_label": "kuni kampaania lõpuni", "name_label": "Sinu nimi:", "name_placeholder": "Nimi", "phone_label": "Sinu telefon:", "submit_button": "ESITA TELLIMUS", "bottom_text": "*Soodustus kehtib ravikuuri tellimisel.", "new_text_placeholder": "Sinu tekst" } },
     "jw": { "name": "Яванский", "flagCode": "id", "currency": "Rp", "phoneCode": "+62", "sampleNames": ["Budi Santoso", "Slamet Raharjo", "Joko Susilo", "Agus Wijaya", "Eko Prasetyo", "Siti Aminah", "Sri Lestari", "Dewi Sartika", "Ratna Wulan", "Indah Puspita"], "samplePhones": ["0813-1122-3344", "0812-5566-7788", "0878-9900-1122", "0857-3344-5566", "0896-7788-9900", "0815-1234-5678", "0895-8765-4321", "0818-2345-6789", "0858-4567-8901", "0821-6789-0123"], "translations": { "top_text": "<strong>CEPETAN!</strong> Set promosi bakal rampung rauh.<br><strong>Nganyari:</strong> Mung <span class='highlight'>17</span> unit sing isih ana nganti saiki.", "discount_text": "- DISKON 79%", "timer_label": "nganti pungkasan promosi", "name_label": "jenengmu:", "name_placeholder": "jeneng", "phone_label": "Telpon sampeyan:", "submit_button": "ORDER", "bottom_text": "* Diskon berlaku nalika pesen perawatan.", "new_text_placeholder": "Teks sampeyan" } },
     "ja": { "name": "Японский", "flagCode": "jp", "currency": "¥", "phoneCode": "+81", "sampleNames": ["佐藤 健太", "鈴木 翔", "高橋 大輔", "田中 拓也", "伊藤 蓮", "佐藤 陽菜", "鈴木 美咲", "高橋 愛子", "渡辺 桜", "山本 結衣"], "samplePhones": ["090-8323-3212", "080-4424-0917", "070-5908-3022", "090-1873-2360", "080-8562-2372", "070-9874-5157", "090-5976-7791", "080-6667-6430", "070-0906-7455", "090-1283-5963"], "translations": { "top_text": "<strong>お急ぎください！</strong>プロモーションセットはまもなく終了します。<br><strong>更新：</strong>今日の時点で残り <span class='highlight'>17</span> ユニットのみ。", "discount_text": "-79%割引", "timer_label": "プロモーション終了まで", "name_label": "あなたの名前：", "name_placeholder": "名前", "phone_label": "お使いの携帯電話:", "submit_button": "注文する", "bottom_text": "*割引はコースをご注文の場合に有効となります。", "new_text_placeholder": "あなたのテキスト" } }
+,"at": {
+    "name": "Австрия (Немецкий)",
+    "flagCode": "at",
+    "currency": "€",
+    "phoneCode": "+43",
+    "sampleNames": ["Noah Müller", "Jonas Schulz", "Felix Hoffmann", "Elias Becker", "Leon Wagner", "Hanna Weber", "Clara Fischer", "Lena Schneider", "Sophia Meyer", "Lina Schmidt"],
+    "samplePhones": ["0664 1234567", "0676 9876543", "0650 2345678", "0680 8765432", "0699 3456789"],
+    "translations": { "top_text": "<strong>BEEILEN SIE SICH!</strong> Die Aktionssets enden bald.<br><strong>Update:</strong> Ab heute sind nur noch <span class='highlight'>17</span> Einheiten übrig.", "discount_text": "-79% RABATT", "timer_label": "bis zum Ende der Aktion", "name_label": "Ihr Name:", "name_placeholder": "Name", "phone_label": "Ihr Telefon:", "submit_button": "EINE BESTELLUNG AUFGEBEN", "bottom_text": "*Der Rabatt ist gültig bei Bestellung einer Kur.", "new_text_placeholder": "Ihren Text" }
+},
+"au": {
+    "name": "Австралия (Английский)",
+    "flagCode": "au",
+    "currency": "A$",
+    "phoneCode": "+61",
+    "sampleNames": ["Oscar Evans", "Noah Brown", "Jack Davies", "Harry Jones", "Charlie Johnson", "Ava Wilson", "Amelia Thomas", "Ivy Taylor", "Rosie Smith", "Isabella Williams"],
+    "samplePhones": ["0412 345 678", "0423 456 789", "0434 567 890", "0445 678 901", "0456 789 012"],
+    "translations": { "top_text": "<strong>HURRY!</strong> Promotional sets will end soon.<br><strong>Update:</strong> Only <span class='highlight'>17</span> units left as of today.", "discount_text": "-79% DISCOUNT", "timer_label": "until the end of the promotion", "name_label": "Your name:", "name_placeholder": "Name", "phone_label": "Your phone:", "submit_button": "PLACE AN ORDER", "bottom_text": "*The discount is valid when ordering a course of treatment.", "new_text_placeholder": "Your text" }
+},
+"bo": {
+    "name": "Боливия (Испанский)",
+    "flagCode": "bo",
+    "currency": "Bs.",
+    "phoneCode": "+591",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["71234567", "69876543", "75432109", "61234567", "77765432"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"cl": {
+    "name": "Чили (Испанский)",
+    "flagCode": "cl",
+    "currency": "$",
+    "phoneCode": "+56",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["9 1234 5678", "9 9876 5432", "9 8765 4321", "9 7654 3210", "9 6543 2109"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"co": {
+    "name": "Колумбия (Испанский)",
+    "flagCode": "co",
+    "currency": "$",
+    "phoneCode": "+57",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["310 1234567", "315 9876543", "300 2345678", "312 8765432", "320 3456789"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"cy-el": {
+    "name": "Кипр (Греческий)",
+    "flagCode": "cy",
+    "currency": "€",
+    "phoneCode": "+357",
+    "sampleNames": ["Γεώργιος Παπαδόπουλος", "Δημήτρης Οικονόμου", "Κωνσταντίνος Καραγιάννης", "Νικόλαος Πέτρου", "Ιωάννης Βασιλείου", "Ελένη Παπαδοπούλου", "Μαρία Οικονόμου", "Αικατερίνη Καραγιάννη", "Σοφία Πέτρου", "Βασιλική Βασιλείου"],
+    "samplePhones": ["99 123456", "96 987654", "97 234567", "95 876543", "94 345678"],
+    "translations": { "top_text": "<strong>ΒΙΑΣΤΕΙΤΕ!</strong> Τα σετ προσφορών θα λήξουν σύντομα.<br><strong>Ενημέρωση:</strong> Μόνο <span class='highlight'>17</span> μονάδες έχουν απομείνει μέχρι σήμερα.", "discount_text": "-79% ΕΚΠΤΩΣΗ", "timer_label": "μέχρι το τέλος της προωθητικής ενέργειας", "name_label": "Το όνομά σας:", "name_placeholder": "Ονομα", "phone_label": "Το τηλέφωνό σας:", "submit_button": "ΥΠΟΒΑΛΕΤΕ ΜΙΑ ΠΑΡΑΓΓΕΛΙΑ", "bottom_text": "*Η έκπτωση ισχύει κατά την παραγγελία μιας θεραπείας.", "new_text_placeholder": "Το κείμενό σας" }
+},
+"ec": {
+    "name": "Эквадор (Испанский)",
+    "flagCode": "ec",
+    "currency": "$",
+    "phoneCode": "+593",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["099 123 4567", "098 765 4321", "097 654 3210", "096 543 2109", "095 432 1098"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"gt": {
+    "name": "Гватемала (Испанский)",
+    "flagCode": "gt",
+    "currency": "Q",
+    "phoneCode": "+502",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["1234 5678", "9876 5432", "8765 4321", "7654 3210", "6543 2109"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"hn": {
+    "name": "Гондурас (Испанский)",
+    "flagCode": "hn",
+    "currency": "L",
+    "phoneCode": "+504",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["9876-5432", "8765-4321", "7654-3210", "3210-9876", "9988-7766"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"ke": {
+    "name": "Кения (Суахили)",
+    "flagCode": "ke",
+    "currency": "KSh",
+    "phoneCode": "+254",
+    "sampleNames": ["Juma Hamisi", "Ali Bakari", "Hassan Kondo", "Musa Rashid", "Salim Juma", "Asha Bakari", "Fatuma Hamisi", "Zainabu Kondo", "Amina Rashid", "Halima Salim"],
+    "samplePhones": ["712 345678", "723 456789", "734 567890", "745 678901", "756 789012"],
+    "translations": { "top_text": "<strong>HARAKA!</strong> Seti za ofa zitaisha hivi karibuni.<br><strong>Sasisha:</strong> Ni vitengo <span class='highlight'>17</span> pekee vilivyosalia kufikia leo.", "discount_text": "-79% PUNGUZO", "timer_label": "hadi mwisho wa promosheni", "name_label": "Jina lako:", "name_placeholder": "Jina", "phone_label": "Simu yako:", "submit_button": "WEKA AGIZO", "bottom_text": "*Punguzo ni halali wakati wa kuagiza kozi ya matibabu.", "new_text_placeholder": "Maandishi yako" }
+},
+"pe": {
+    "name": "Перу (Испанский)",
+    "flagCode": "pe",
+    "currency": "S/",
+    "phoneCode": "+51",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["912 345 678", "998 765 432", "987 654 321", "976 543 210", "965 432 109"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"pr": {
+    "name": "Пуэрто-Рико (Испанский)",
+    "flagCode": "pr",
+    "currency": "$",
+    "phoneCode": "+1",
+    "sampleNames": ["Pablo Rodríguez", "Lucas González", "Leo García", "Martín Sánchez", "Álvaro Fernández", "Paula Sánchez", "Martina López", "Daniela Pérez", "Sofía Gómez", "Lucía Martínez"],
+    "samplePhones": ["(787) 123-4567", "(939) 987-6543", "(787) 234-5678", "(939) 876-5432", "(787) 345-6789"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"za-en": {
+    "name": "ЮАР (Английский)",
+    "flagCode": "za",
+    "currency": "R",
+    "phoneCode": "+27",
+    "sampleNames": ["Junior Du Plessis", "Lethabo Nkosi", "Mandla Van Wyk", "Blessing Van der Merwe", "Sipho Mthembu", "Lerato Ndlovu", "Thando Zulu", "Precious Botha", "Angel Sithole", "Naledi Dlamini"],
+    "samplePhones": ["076 606 6092", "082 979 3131", "061 220 0231", "072 226 3660", "083 909 0803"],
+    "translations": { "top_text": "<strong>HURRY!</strong> Promotional sets will end soon.<br><strong>Update:</strong> Only <span class='highlight'>17</span> units left as of today.", "discount_text": "-79% DISCOUNT", "timer_label": "until the end of the promotion", "name_label": "Your name:", "name_placeholder": "Name", "phone_label": "Your phone:", "submit_button": "PLACE AN ORDER", "bottom_text": "*The discount is valid when ordering a course of treatment.", "new_text_placeholder": "Your text" }
+},"be-fr": {
+    "name": "Бельгия (Французский)",
+    "flagCode": "be",
+    "currency": "€",
+    "phoneCode": "+32",
+    "sampleNames": ["Lucas Dubois", "Noah Lambert", "Arthur Martin", "Louis Simon", "Jules Dupont", "Emma Peeters", "Olivia Janssens", "Louise Martin", "Alice Simon", "Mila Dubois"],
+    "samplePhones": ["0475 12 34 56", "0486 98 76 54", "0495 23 45 67", "0468 87 65 43", "0477 34 56 78", "0488 76 54 32", "0499 56 78 90", "0467 11 22 33", "0476 44 55 66", "0485 77 88 99"],
+    "translations": { "top_text": "<strong>FAITES VITE !</strong> Les lots promotionnels seront bientôt épuisés.<br><strong>Mise à jour :</strong> Il ne reste que <span class='highlight'>17</span> unités à ce jour.", "discount_text": "-79% DE RÉDUCTION", "timer_label": "jusqu'à la fin de la promotion", "name_label": "Votre nom:", "name_placeholder": "Nom", "phone_label": "Votre téléphone:", "submit_button": "PASSER UNE COMMANDE", "bottom_text": "*La réduction est valable lors de la commande d'une cure.", "new_text_placeholder": "Votre texte" }
+},
+"bd": {
+    "name": "Бангладеш (Бенгальский)",
+    "flagCode": "bd",
+    "currency": "৳",
+    "phoneCode": "+880",
+    "sampleNames": ["Rahim Ahmed", "Karim Khan", "Hasan Chowdhury", "Abdullah Rahman", "Mohammad Islam", "Fatima Khan", "Ayesha Ahmed", "Nusrat Chowdhury", "Jannat Islam", "Sadia Rahman"],
+    "samplePhones": ["01712-345678", "01823-456789", "01934-567890", "01545-678901", "01656-789012", "01767-890123", "01878-901234", "01989-012345", "01590-123456", "01601-234567"],
+    "translations": { "top_text": "<strong>তাড়াতাড়ি করুন!</strong> প্রচারমূলক সেটগুলি শীঘ্রই শেষ হবে।<br><strong>আপডেট:</strong> আজ পর্যন্ত মাত্র <span class='highlight'>১৭</span>টি ইউনিট বাকি আছে।", "discount_text": "-৭৯% ছাড়", "timer_label": "প্রচারণা শেষ না হওয়া পর্যন্ত", "name_label": "তোমার নাম:", "name_placeholder": "নাম", "phone_label": "তোমার ফোন:", "submit_button": "অর্ডার দিন", "bottom_text": "*চিকিৎসার কোর্স অর্ডার করার সময় এই ছাড় প্রযোজ্য।", "new_text_placeholder": "আপনার লেখা" }
+},
+"es-ar": {
+    "name": "Аргентина (Испанский)",
+    "flagCode": "ar",
+    "currency": "$",
+    "phoneCode": "+54",
+    "sampleNames": ["Mateo González", "Juan Rodríguez", "Santiago Gómez", "Benjamín Fernández", "Tomás López", "Sofía Fernández", "Valentina Gómez", "Martina Rodríguez", "Isabella López", "Catalina González"],
+    "samplePhones": ["11 4567-8901", "11 5678-9012", "221 456-7890", "351 567-8901", "261 456-7890", "11 6789-0123", "341 789-0123", "299 890-1234", "381 901-2345", "223 012-3456"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"es-sv": {
+    "name": "Сальвадор (Испанский)",
+    "flagCode": "sv",
+    "currency": "$",
+    "phoneCode": "+503",
+    "sampleNames": ["José Hernández", "Juan Martínez", "Carlos López", "Manuel García", "Luis Pérez", "María Rivera", "Ana Morales", "Sofía Cruz", "Camila Romero", "Valentina Vásquez"],
+    "samplePhones": ["7890-1234", "7123-4567", "7234-5678", "7345-6789", "7456-7890", "7567-8901", "7678-9012", "7789-0123", "7890-1234", "7901-2345"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
+"cr": {
+    "name": "Коста-Рика (Испанский)",
+    "flagCode": "cr",
+    "currency": "₡",
+    "phoneCode": "+506",
+    "sampleNames": ["Santiago Rodríguez", "Sebastián González", "Mateo Vargas", "Matías Mora", "Daniel Jiménez", "Sofía Vargas", "Valentina Jiménez", "Isabella Rodríguez", "Luciana Mora", "Camila González"],
+    "samplePhones": ["8888-7777", "7123-4567", "6012-3456", "8765-4321", "7012-3456", "6123-4567", "8543-2109", "7234-5678", "6345-6789", "8877-6655"],
+    "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
+},
 };

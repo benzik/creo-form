@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -30,8 +31,10 @@
                         <li><small><strong>- удалить текст:</strong> Удаляет выбранный текстовый блок.</small></li>
                         <li><small><strong>Добавить продукт:</strong> Позволяет загрузить изображение для товара.</small></li>
                         <li><small><strong>Подобрать имя и номер:</strong> Генерирует случайные данные для полей "Имя" и "Телефон" на основе выбранной страны.</small></li>
+                        <li><small><strong>Мужское/Женское имя:</strong> Генерирует случайное имя соответствующего пола, не меняя номер телефона.</small></li>
                         <li><small><strong>Заменить флаг:</strong> Позволяет загрузить своё изображение вместо стандартного флага.</small></li>
                          <li><small><strong>Переключатели "Таймер" и "Флаг":</strong> Позволяют скрыть или показать эти элементы на форме.</small></li>
+                         <li><small><strong>Кнопки расчета цен:</strong> Позволяют автоматически рассчитать скидку, старую или новую цену на основе двух других значений. Просто отредактируйте два поля из трех (старая цена, новая цена, скидка) и нажмите соответствующую кнопку расчета.</small></li>
                     </ul>
                 </li>
                  <li><strong>Сохраненные пресеты:</strong> Позволяет сохранять и загружать полный дизайн формы. Введите имя и нажмите "Сохранить", чтобы создать пресет. Выберите пресет из списка и нажмите "Загрузить", чтобы его применить.</li>
@@ -40,7 +43,7 @@
             <h4>Окно предпросмотра (справа)</h4>
              <ul>
                 <li><strong>Перемещение:</strong> Наведите курсор на элемент, зажмите левую кнопку мыши и перетаскивайте.</li>
-                <li><strong>Редактирование текста:</strong> Просто кликните на любой текст, чтобы начать его редактировать.</li>
+                <li><strong>Редактирование текста:</strong> Просто кликните на любой текст, чтобы начать его редактировать. Это также относится к ценам и скидке.</li>
                 <li><strong>Изменение размера:</strong> Кликните на изображение продукта, чтобы появились маркеры по углам. Потяните за них, чтобы изменить размер.</li>
             </ul>
 
@@ -116,8 +119,22 @@
                         <button id="delete-text-button" class="danger" disabled>- удалить текст</button>
                     </div>
                     <button id="add-product-button">Добавить продукт</button>
-                    <button id="generate-data-button">Подобрать имя и номер</button>
+                    <div class="name-generation-group">
+                        <button id="generate-data-button">Подобрать имя и номер</button>
+                        <div class="gender-buttons-wrapper">
+                            <button id="generate-male-name-button" class="gender-button">Мужское имя</button>
+                            <button id="generate-female-name-button" class="gender-button">Женское имя</button>
+                        </div>
+                    </div>
                     <button id="replace-flag-button">Заменить флаг</button>
+                    
+                    <div class="control-group">
+                        <label>Расчет цен:</label>
+                        <button id="calculate-discount-button" class="calculation-button">Рассчитать скидку</button>
+                        <button id="calculate-new-price-button" class="calculation-button">Рассчитать новую цену</button>
+                        <button id="calculate-old-price-button" class="calculation-button">Рассчитать старую цену</button>
+                    </div>
+
                     <div class="control-toggles">
                         <label>Таймер: 
                             <svg id="timer-toggle" class="control-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -186,7 +203,7 @@
                 <div id="preview-name" class="draggable editable-text simulated-input">Имя</div>
 
                 <label id="phone-label" class="draggable editable-text">Your phone:</label>
-                <div id="phone-input-container" class="draggable phone-input-wrapper">
+                <div id="phone-input-container" class="draggable editable-text phone-input-wrapper">
                     <img id="preview-flag" class="hidden" alt="flag">
                     <input type="text" id="preview-phone" value="+7">
                 </div>

@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const savedData = localStorage.getItem('visualEditorCountryData');
     if (savedData) {
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragTimer = null;
     let hasMoved = false;
     let animationTimeouts = [];
+    let isPhoneManuallyEdited = false; // Флаг для отслеживания ручного редактирования телефона
 
     const undoButton = document.getElementById('undo-button');
     const redoButton = document.getElementById('redo-button');
@@ -37,6 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const replaceFlagButton = document.getElementById('replace-flag-button');
     const timerFontSizeInput = document.getElementById('ctrl-timer-font-size');
     const timerInput = document.getElementById('ctrl-timer-input');
+    
+    // Кнопки расчета
+    const calculateDiscountButton = document.getElementById('calculate-discount-button');
+    const calculateNewPriceButton = document.getElementById('calculate-new-price-button');
+    const calculateOldPriceButton = document.getElementById('calculate-old-price-button');
+    
+    // Новые кнопки генерации имен по полу
+    const generateMaleNameButton = document.getElementById('generate-male-name-button');
+    const generateFemaleNameButton = document.getElementById('generate-female-name-button');
+
 
     // --- ЛОГИКА АККОРДЕОНА ---
     const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -91,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const state = {
             html: formWrapper.innerHTML,
             regionValue: regionInput.value,
-            wrapperHeight: formWrapper.style.height
+            wrapperHeight: formWrapper.style.height,
+            isPhoneEdited: isPhoneManuallyEdited // Сохраняем состояние флага в истории
         };
 
         const lastState = historyStack[historyStack.length - 1];
@@ -116,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formWrapper.innerHTML = state.html;
         formWrapper.style.height = state.wrapperHeight;
         regionInput.value = state.regionValue;
+        isPhoneManuallyEdited = state.isPhoneEdited || false; // Восстанавливаем состояние флага
 
         reinitializeInteractions();
         attachFileInputListeners();
@@ -144,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     redoButton.addEventListener('click', redo);
 
     document.addEventListener('keydown', (e) => {
-        if (e.target.isContentEditable && e.target.closest('.preview')) {
+        if ((e.target.isContentEditable || e.target.id === 'preview-phone') && e.target.closest('.preview')) {
             return;
         }
 
@@ -161,6 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function reinitializeInteractions() {
         const formWrapper = document.querySelector('.form-wrapper');
         const snapGuide = document.getElementById('snap-guide');
+
+        // Добавляем слушатель для отслеживания ручного ввода в поле телефона
+        const phoneInput = document.getElementById('preview-phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', () => {
+                isPhoneManuallyEdited = true;
+            });
+        }
 
         const snapModifier = interact.modifiers.snap({
             targets: [
@@ -196,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     hasMoved = false; 
                 },
                 move: (event) => {
-                    if (document.body.classList.contains('simulation-mode') || (event.target.isContentEditable)) return;
+                    if (document.body.classList.contains('simulation-mode') || (event.target.isContentEditable || event.target.classList.contains('editing'))) return;
                     
                     hasMoved = true; 
 
@@ -273,18 +295,37 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateFormForCountry(countryCode) {
         const data = countryData[countryCode];
         if (!data) return;
+
+        // Сохраняем текущее числовое значение скидки перед обновлением текста
+        const discountEl = document.getElementById('preview-discount');
+        const currentDiscountNumber = parseNumberFromElement(discountEl);
+        const newDiscountTemplate = data.translations.discount_text;
+
+        if (!isNaN(currentDiscountNumber)) {
+            // Заменяем число в новом шаблоне на текущее
+            discountEl.innerHTML = newDiscountTemplate.replace(/(\d+)/, currentDiscountNumber);
+        } else {
+            // Если числа нет, просто используем шаблон
+            discountEl.innerHTML = newDiscountTemplate;
+        }
+
         document.getElementById('top-text').innerHTML = data.translations.top_text;
-        document.getElementById('preview-discount').innerText = data.translations.discount_text;
         document.getElementById('timer-label').innerText = data.translations.timer_label;
         document.getElementById('name-label').innerText = data.translations.name_label;
         document.getElementById('preview-name').innerText = data.translations.name_placeholder;
         document.getElementById('phone-label').innerText = data.translations.phone_label;
         document.getElementById('preview-button').innerText = data.translations.submit_button;
         document.getElementById('bottom-text').innerText = data.translations.bottom_text;
-        const priceOld = document.querySelector('.price-old');
-        const priceNew = document.querySelector('.price-new');
-        priceOld.innerText = (priceOld.innerText.match(/\d+/g) || ["280"]).join('') + data.currency;
-        priceNew.innerText = (priceNew.innerText.match(/\d+/g) || ["59"]).join('') + data.currency;
+        
+        const priceOldEl = document.querySelector('.price-old');
+        const priceNewEl = document.querySelector('.price-new');
+        // Сохраняем число, меняем только валюту.
+        const oldPriceNumber = parseNumberFromElement(priceOldEl) || 280;
+        const newPriceNumber = parseNumberFromElement(priceNewEl) || 59;
+        priceOldEl.innerHTML = `${data.currency}${oldPriceNumber}`;
+        priceNewEl.innerHTML = `${data.currency}${newPriceNumber}`;
+
+
         const flagImg = document.getElementById('preview-flag');
         const flagToggle = document.getElementById('flag-toggle');
         if (data.flagCode) {
@@ -299,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveState();
     }
 
+    // Старая функция генерации имени и номера
     generateDataButton.addEventListener('click', () => {
         const selectedName = regionInput.value; const code = getCodeByName(selectedName); if (!code) return;
         const data = countryData[code]; if (!data || !data.sampleNames || !data.sampleNames.length || !data.samplePhones || !data.samplePhones.length) return;
@@ -306,6 +348,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const randomPhone = data.samplePhones[Math.floor(Math.random() * data.samplePhones.length)];
         document.getElementById('preview-name').innerText = randomName;
         document.getElementById('preview-phone').value = data.phoneCode + randomPhone.replace(/[^0-9-]/g, '');
+        isPhoneManuallyEdited = false; // Сбрасываем флаг, так как это программное изменение
+        saveState();
+    });
+
+    // Новая функция генерации мужского имени
+    generateMaleNameButton.addEventListener('click', () => {
+        const selectedName = regionInput.value;
+        const code = getCodeByName(selectedName);
+        if (!code) return;
+        const data = countryData[code];
+        if (!data || !data.sampleNames || data.sampleNames.length < 5) return;
+        const maleNames = data.sampleNames.slice(0, 5);
+        const randomName = maleNames[Math.floor(Math.random() * maleNames.length)];
+        document.getElementById('preview-name').innerText = randomName;
+        saveState();
+    });
+
+    // Новая функция генерации женского имени
+    generateFemaleNameButton.addEventListener('click', () => {
+        const selectedName = regionInput.value;
+        const code = getCodeByName(selectedName);
+        if (!code) return;
+        const data = countryData[code];
+        if (!data || !data.sampleNames || data.sampleNames.length < 10) return;
+        const femaleNames = data.sampleNames.slice(5, 10);
+        const randomName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+        document.getElementById('preview-name').innerText = randomName;
         saveState();
     });
     
@@ -332,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const code = getCodeByName(selectedName);
         if (code) {
             updateFormForCountry(code);
+            isPhoneManuallyEdited = false; // Сбрасываем флаг при смене страны
         }
         if (regionInput.value) {
             clearRegionButton.classList.remove('hidden');
@@ -363,12 +433,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000); 
     }
     
-    function deselectAll(withoutSaving = false) { 
-        if (currentSelectedElement) { 
-            currentSelectedElement.contentEditable = false; 
-            currentSelectedElement.blur(); 
-            currentSelectedElement = null; 
-        } 
+    function deselectAll(withoutSaving = false) {
+        if (currentSelectedElement) {
+            if (currentSelectedElement.id === 'phone-input-container') {
+                currentSelectedElement.classList.remove('editing');
+                const phoneInput = currentSelectedElement.querySelector('#preview-phone');
+                if (phoneInput) {
+                    phoneInput.blur();
+                }
+            } else if (currentSelectedElement.isContentEditable) {
+                currentSelectedElement.contentEditable = false;
+                currentSelectedElement.blur();
+            }
+            currentSelectedElement = null;
+        }
         const productArea = document.getElementById('product-area');
         if (productArea) productArea.classList.remove('selected');
         
@@ -381,18 +459,38 @@ document.addEventListener('DOMContentLoaded', () => {
     function activateEditing(target) {
         deselectAll(true);
         currentSelectedElement = target;
-        target.contentEditable = true;
-        target.focus();
+        
+        if (target.id === 'phone-input-container') {
+            target.classList.add('editing');
+            const phoneInput = target.querySelector('#preview-phone');
+            if (phoneInput) {
+                phoneInput.focus();
+            }
+        } else {
+            target.contentEditable = true;
+            target.focus();
+        }
+
         document.querySelector('.form-wrapper').classList.add('text-editing-mode');
         formatButtons.classList.remove('disabled');
-        deleteTextButton.disabled = false;
+        deleteTextButton.disabled = !target.classList.contains('dynamic-text');
     }
     
-    previewPanel.addEventListener('mousedown', (event) => { if (document.body.classList.contains('simulation-mode')) return; const textTarget = event.target.closest('.editable-text'); const imageTarget = event.target.closest('#product-area'); if (textTarget) { if (textTarget.isContentEditable) return; hasMoved = false; dragTimer = setTimeout(() => { clearTimeout(dragTimer); dragTimer = null; }, 200); } else if (imageTarget) { deselectAll(true); imageTarget.classList.add('selected'); } else { deselectAll(); } });
+    previewPanel.addEventListener('mousedown', (event) => { if (document.body.classList.contains('simulation-mode')) return; const textTarget = event.target.closest('.editable-text'); const imageTarget = event.target.closest('#product-area'); if (textTarget) { if (textTarget.isContentEditable || textTarget.classList.contains('editing')) return; hasMoved = false; dragTimer = setTimeout(() => { clearTimeout(dragTimer); dragTimer = null; }, 200); } else if (imageTarget) { deselectAll(true); imageTarget.classList.add('selected'); } else { deselectAll(); } });
     previewPanel.addEventListener('mouseup', (event) => { if (document.body.classList.contains('simulation-mode')) return; const target = event.target.closest('.editable-text'); if (dragTimer && !hasMoved && target) { activateEditing(target); } clearTimeout(dragTimer); dragTimer = null; });
     addTextButton.addEventListener('click', () => { const newText = document.createElement('p'); newText.id = `dynamic-text-${Date.now()}`; newText.classList.add('draggable', 'editable-text', 'dynamic-text'); const code = getCodeByName(regionInput.value) || 'ru'; const placeholder = (countryData[code] && countryData[code].translations.new_text_placeholder) || "Ваш текст"; newText.innerText = placeholder; document.querySelector('.form-wrapper').appendChild(newText); reinitializeInteractions(); updateWrapperSize(); activateEditing(newText); saveState(); });
     deleteTextButton.addEventListener('click', () => { if (currentSelectedElement) { if (currentSelectedElement.classList.contains('dynamic-text')) { currentSelectedElement.remove(); } else { currentSelectedElement.innerHTML = ''; } deselectAll(); } });
-    previewPanel.addEventListener('keydown', (event) => {if (currentSelectedElement) { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); deselectAll(); } else if (event.key === 'Enter' && event.shiftKey) { setTimeout(updateWrapperSize, 10);}}});
+    
+    previewPanel.addEventListener('keydown', (event) => {
+        if (!currentSelectedElement) return;
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            deselectAll();
+        } else if (event.key === 'Enter' && event.shiftKey && currentSelectedElement.isContentEditable) {
+            setTimeout(updateWrapperSize, 10);
+        }
+    });
+    
     previewPanel.addEventListener('input', () => { if (currentSelectedElement) { updateWrapperSize(); }});
     
     function hasSelection() {
@@ -402,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     formatButtons.addEventListener('click', (e) => {
         const button = e.target.closest('button');
-        if (!button || !currentSelectedElement) return;
+        if (!button || !currentSelectedElement || currentSelectedElement.id === 'phone-input-container') return;
         const command = button.dataset.command;
         if (command) {
             const hadSelection = hasSelection();
@@ -424,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     colorInput.addEventListener('input', (e) => {
-        if (currentSelectedElement) {
+        if (currentSelectedElement && currentSelectedElement.id !== 'phone-input-container') {
              const hadSelection = hasSelection();
             if (!hadSelection) {
                 const range = document.createRange();
@@ -460,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     fontSelect.addEventListener('change', (e) => {
-        if (currentSelectedElement) {
+        if (currentSelectedElement && currentSelectedElement.id !== 'phone-input-container') {
             if (hasSelection()) {
                 applyStyleToSelection('fontFamily', e.target.value);
             } else {
@@ -472,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     fontSizeInput.addEventListener('input', (e) => {
-        if (currentSelectedElement) {
+        if (currentSelectedElement && currentSelectedElement.id !== 'phone-input-container') {
             const size = e.target.value + 'px';
              if (hasSelection()) {
                 applyStyleToSelection('fontSize', size);
@@ -571,6 +669,93 @@ document.addEventListener('DOMContentLoaded', () => {
         saveState();
     });
     
+    // --- НОВЫЙ ФУНКЦИОНАЛ РАСЧЕТА ЦЕН ---
+
+    function parseNumberFromElement(element) {
+        if (!element || !element.textContent) return NaN;
+        const match = element.textContent.replace(',', '.').match(/(\d+(\.\d+)?)/);
+        return match ? parseFloat(match[0]) : NaN;
+    }
+
+    function updateNumberInElement(node, newValue) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const regex = /(\d+([,.]\d+)?)/;
+            if (regex.test(node.nodeValue)) {
+                node.nodeValue = node.nodeValue.replace(regex, String(newValue));
+                return true;
+            }
+        } else if (node.hasChildNodes()) {
+            for (const child of Array.from(node.childNodes)) {
+                if (updateNumberInElement(child, newValue)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    calculateDiscountButton.addEventListener('click', () => {
+        const oldPriceEl = document.querySelector('.price-old');
+        const newPriceEl = document.querySelector('.price-new');
+        const discountEl = document.getElementById('preview-discount');
+
+        const oldPrice = parseNumberFromElement(oldPriceEl);
+        const newPrice = parseNumberFromElement(newPriceEl);
+
+        if (isNaN(oldPrice) || isNaN(newPrice) || oldPrice <= 0) {
+            alert('Ошибка: Не удалось прочитать старую и новую цену. Убедитесь, что они введены корректно.');
+            return;
+        }
+
+        const discount = Math.round(100 * (1 - (newPrice / oldPrice)));
+        if (discount < 0) {
+             alert('Новая цена не может быть больше старой.');
+             return;
+        }
+
+        updateNumberInElement(discountEl, discount);
+        saveState();
+    });
+
+    calculateNewPriceButton.addEventListener('click', () => {
+        const oldPriceEl = document.querySelector('.price-old');
+        const newPriceEl = document.querySelector('.price-new');
+        const discountEl = document.getElementById('preview-discount');
+
+        const oldPrice = parseNumberFromElement(oldPriceEl);
+        const discount = parseNumberFromElement(discountEl);
+        
+        if (isNaN(oldPrice) || isNaN(discount)) {
+            alert('Ошибка: Не удалось прочитать старую цену и скидку. Убедитесь, что они введены корректно.');
+            return;
+        }
+
+        const newPrice = Math.round(oldPrice * (1 - (discount / 100)));
+        updateNumberInElement(newPriceEl, newPrice);
+        saveState();
+    });
+
+    calculateOldPriceButton.addEventListener('click', () => {
+        const oldPriceEl = document.querySelector('.price-old');
+        const newPriceEl = document.querySelector('.price-new');
+        const discountEl = document.getElementById('preview-discount');
+
+        const newPrice = parseNumberFromElement(newPriceEl);
+        const discount = parseNumberFromElement(discountEl);
+
+        if (isNaN(newPrice) || isNaN(discount) || discount >= 100) {
+            alert('Ошибка: Не удалось прочитать новую цену и скидку, или скидка равна/больше 100%. Убедитесь, что они введены корректно.');
+            return;
+        }
+        
+        const oldPrice = Math.round(newPrice / (1 - (discount / 100)));
+        updateNumberInElement(oldPriceEl, oldPrice);
+        saveState();
+    });
+
+
+    // --- КОНЕЦ НОВОГО ФУНКЦИОНАЛА ---
+
     function scheduleAnimation(callback, delay) {
         const timeoutId = setTimeout(callback, delay);
         animationTimeouts.push(timeoutId);
@@ -628,11 +813,18 @@ document.addEventListener('DOMContentLoaded', () => {
         nameEl.textContent = data.translations ? data.translations.name_placeholder : "Имя";
         nameEl.style.color = '#999';
 
-        const fullTargetPhone = phoneEl.value;
-        const phoneCode = data.phoneCode || '';
-        const targetPhone = fullTargetPhone.startsWith(phoneCode) ? fullTargetPhone.substring(phoneCode.length) : fullTargetPhone;
-
-        phoneEl.value = phoneCode;
+        // Условная логика для анимации телефона
+        let targetPhone;
+        if (isPhoneManuallyEdited) {
+            // Если пользователь редактировал, печатаем всё с нуля
+            targetPhone = phoneEl.value;
+            phoneEl.value = '';
+        } else {
+            // Если не редактировал, код страны уже есть, печатаем остаток
+            const phoneCode = data.phoneCode || '';
+            targetPhone = phoneEl.value.startsWith(phoneCode) ? phoneEl.value.substring(phoneCode.length) : phoneEl.value;
+            phoneEl.value = phoneCode;
+        }
 
         scheduleAnimation(() => {
             const nameDuration = animationDuration * 0.5;
@@ -818,6 +1010,12 @@ document.addEventListener('DOMContentLoaded', () => {
         populateCountrySelector();
         updatePresetsList();
         const initialCode = 'ru'; 
+        // Initializing prices differently now to avoid overwriting on language change
+        const priceOldEl = document.querySelector('.price-old');
+        const priceNewEl = document.querySelector('.price-new');
+        if (!priceOldEl.textContent.match(/\d+/)) priceOldEl.textContent = '₽280';
+        if (!priceNewEl.textContent.match(/\d+/)) priceNewEl.textContent = '₽59';
+
         updateFormForCountry(initialCode); 
         regionInput.value = ''; 
         reinitializeInteractions();
