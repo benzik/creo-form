@@ -251,4 +251,13 @@ let countryData = {
     "samplePhones": ["8888-7777", "7123-4567", "6012-3456", "8765-4321", "7012-3456", "6123-4567", "8543-2109", "7234-5678", "6345-6789", "8877-6655"],
     "translations": { "top_text": "<strong>¡Date prisa!</strong> Los sets promocionales terminarán pronto.<br><strong>Actualización:</strong> solo quedan <span class='highlight'>17</span> unidades a día de hoy.", "discount_text": "-79% de descuento", "timer_label": "hasta el final de la promoción", "name_label": "Su nombre:", "name_placeholder": "Nombre", "phone_label": "Tu teléfono:", "submit_button": "HACER UN PEDIDO", "bottom_text": "*El descuento es válido al solicitar un tratamiento.", "new_text_placeholder": "Su texto" }
 },
+"qa": {
+    "name": "Катар (Арабский)",
+    "flagCode": "qa",
+    "currency": "QR",
+    "phoneCode": "+974",
+    "sampleNames": ["محمد المري", "أحمد الكعبي", "علي الهاجري", "حمد الكواري", "عبدالله الدوسري", "فاطمة النعيمي", "مريم السويدي", "نورة العطية", "عائشة المنصوري", "سارة المهندي"],
+    "samplePhones": ["3312 3456", "5598 7654", "6612 3456", "7765 4321", "3001 2345", "5000 1122", "6677 8899", "7012 3456", "3344 5566", "5511 2233"],
+    "translations": { "top_text": "<strong>عجلوا!</strong> العروض الترويجية ستنتهي قريباً.<br><strong>تحديث:</strong> بقي <span class='highlight'>17</span> قطعة فقط اليوم.", "discount_text": "خصم -50%", "timer_label": "حتى انتهاء العرض", "name_label": "الاسم:", "name_placeholder": "الاسم الكامل", "phone_label": "رقم الهاتف:", "submit_button": "اطلب الآن", "bottom_text": "*الخصم ساري عند طلب دورة كاملة.", "new_text_placeholder": "نصك" }
+},
 };

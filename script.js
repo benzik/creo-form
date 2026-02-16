@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const savedData = localStorage.getItem('visualEditorCountryData');
     if (savedData) {
@@ -322,9 +321,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // Сохраняем число, меняем только валюту.
         const oldPriceNumber = parseNumberFromElement(priceOldEl) || 280;
         const newPriceNumber = parseNumberFromElement(priceNewEl) || 59;
-        priceOldEl.innerHTML = `${data.currency}${oldPriceNumber}`;
-        priceNewEl.innerHTML = `${data.currency}${newPriceNumber}`;
 
+        // Список стран, где валюта пишется ПОСЛЕ цены (согласно data.js)
+        const suffixCountries = [
+            "at", "be-fr", "de", "dk", "et", "es", "fi", "fr", "el", "hr", "is", "it", 
+            "lt", "lv", "no", "pt", "sv", "sl", "sk", "bg", "bs", "cs", "hu", 
+            "mk", "pl", "ro", "sr", "sq", "az", "be", "ky", "kk", "ru", 
+            "tg", "uk", "uz", "km", "lo", "mn", "th", "vi", "cy-el",
+            "gl", "ca", "lb", "eu", "qa"
+        ];
+
+        // Проверяем, входит ли страна в список "суффиксных"
+        if (suffixCountries.includes(countryCode)) {
+            // Валюта ПОСЛЕ числа (например: 100 €)
+            priceOldEl.innerHTML = `${oldPriceNumber} ${data.currency}`;
+            priceNewEl.innerHTML = `${newPriceNumber} ${data.currency}`;
+        } else {
+            // Валюта ДО числа (например: $100) - для всех остальных
+            priceOldEl.innerHTML = `${data.currency}${oldPriceNumber}`;
+            priceNewEl.innerHTML = `${data.currency}${newPriceNumber}`;
+        }
 
         const flagImg = document.getElementById('preview-flag');
         const flagToggle = document.getElementById('flag-toggle');
