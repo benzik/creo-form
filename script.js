@@ -689,15 +689,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseNumberFromElement(element) {
         if (!element || !element.textContent) return NaN;
-        const match = element.textContent.replace(',', '.').match(/(\d+(\.\d+)?)/);
+        
+        // 1. Конвертируем возможные арабские/персидские цифры в стандартные (0-9)
+        let text = element.textContent.replace(/[٠-٩۰-۹]/g, d => d.charCodeAt(0) % 16);
+        
+        // 2. Очищаем текст от пробелов, букв и символов валют (оставляем только цифры, точки и запятые)
+        text = text.replace(/[^\d.,]/g, '');
+        
+        // 3. Умная обработка точек и запятых
+        if (text.includes('.') && text.includes(',')) {
+            // Если есть и точка, и запятая, считаем последний символ десятичным разделителем
+            const lastSep = Math.max(text.lastIndexOf('.'), text.lastIndexOf(','));
+            text = text.substring(0, lastSep).replace(/[,.]/g, '') + '.' + text.substring(lastSep + 1);
+        } else {
+            // Если разделитель один, и после него ровно 3 цифры (например, 1 500 введено как 1,500 или 1.500)
+            if (/[,.]\d{3}$/.test(text)) {
+                text = text.replace(/[,.]/g, ''); // Это разделитель тысяч, удаляем его
+            } else {
+                text = text.replace(',', '.'); // Иначе это десятичная точка
+            }
+        }
+
+        const match = text.match(/(\d+(\.\d+)?)/);
         return match ? parseFloat(match[0]) : NaN;
     }
 
     function updateNumberInElement(node, newValue) {
+        // Нормализуем DOM: сливаем воедино текстовые узлы, если браузер разбил их при редактировании
+        if (node.nodeType === Node.ELEMENT_NODE) node.normalize();
+
         if (node.nodeType === Node.TEXT_NODE) {
-            const regex = /(\d+([,.]\d+)?)/;
+            // Ищем старое число. Теперь регулярка учитывает пробелы, точки и запятые внутри числа
+            const regex = /([\d]+([\s\u00A0.,]+[\d]+)*)/;
             if (regex.test(node.nodeValue)) {
-                node.nodeValue = node.nodeValue.replace(regex, String(newValue));
+                // Красиво форматируем новое значение: 1500 превратится в "1 500"
+                let formattedValue = Number.isInteger(newValue) 
+                    ? newValue.toLocaleString('ru-RU') 
+                    : String(newValue).replace('.', ',');
+                
+                node.nodeValue = node.nodeValue.replace(regex, formattedValue);
                 return true;
             }
         } else if (node.hasChildNodes()) {
@@ -1052,6 +1082,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('resize', updateWrapperSize);
     }
+    // --- DRAG-AND-DROP ДЛЯ КАРТИНКИ ПРОДУКТА ---
+    const productAreaDropZone = document.getElementById('product-area');
     
+    // Функция обработки файла (используем и для клика, и для дропа)
+    function processProductImage(file) {
+        if (file && file.type.startsWith('image/')) {
+            const currentContent = productAreaDropZone.querySelector('img, .image-placeholder');
+            if (currentContent) { currentContent.remove(); }
+            
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            productAreaDropZone.prepend(img);
+            
+            updateWrapperSize();
+            saveState();
+        } else {
+            alert('Пожалуйста, перетащите файл изображения (JPG, PNG, WEBP и т.д.)');
+        }
+    }
+
+    // Событие: картинку навели на область
+    productAreaDropZone.addEventListener('dragover', (e) => {
+        e.preventDefault(); // Обязательно, иначе браузер просто откроет картинку
+        if (!document.body.classList.contains('simulation-mode')) {
+            productAreaDropZone.classList.add('drag-over');
+        }
+    });
+
+    // Событие: картинку увели с области
+    productAreaDropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        productAreaDropZone.classList.remove('drag-over');
+    });
+
+    // Событие: картинку отпустили (бросили)
+    productAreaDropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        productAreaDropZone.classList.remove('drag-over');
+        
+        if (document.body.classList.contains('simulation-mode')) return;
+
+        // Берем первый перетаскиваемый файл
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            processProductImage(e.dataTransfer.files[0]);
+        }
+    });
     initialize();
 });
