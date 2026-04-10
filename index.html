@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,21 +5,18 @@
     <title>Визуальный редактор формы</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&family=Lato&family=Lobster&family=Lora&family=Merriweather&family=Montserrat&family=Nunito+Sans&family=Open+Sans&family=Oswald&family=PT+Serif&family=Pacifico&family=Playfair+Display&family=Poppins&family=Roboto:wght@400;700;900&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&family=Lato&family=Lobster&family=Lora&family=Merriweather&family=Montserrat&family=Nunito+Sans&family=Open+Sans&family=Oswald&family=PT+Serif&family=Pacifico&family=Playfair+Display&family=Poppins&family=Roboto:wght@400;500;700;900&family=Source+Sans+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="edit-banner">вернуться к редактированию</div>
 
-    <!-- Модальное окно помощи -->
     <div id="help-modal" class="hidden">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>Справка по редактору</h2>
-            
             <h4>Основной принцип</h4>
             <p>Этот редактор позволяет визуально настраивать внешний вид формы. Все изменения сохраняются автоматически. Вы можете перемещать, изменять размер и редактировать текст большинства элементов прямо в окне предпросмотра.</p>
-            
             <h4>Панель управления (слева)</h4>
             <ul>
                 <li><strong>Страна:</strong> Выбор страны меняет язык, валюту, телефонный код и флаг на форме.</li>
@@ -34,28 +30,27 @@
                         <li><small><strong>Мужское/Женское имя:</strong> Генерирует случайное имя соответствующего пола, не меняя номер телефона.</small></li>
                         <li><small><strong>Заменить флаг:</strong> Позволяет загрузить своё изображение вместо стандартного флага.</small></li>
                          <li><small><strong>Переключатели "Таймер" и "Флаг":</strong> Позволяют скрыть или показать эти элементы на форме.</small></li>
-                         <li><small><strong>Кнопки расчета цен:</strong> Позволяют автоматически рассчитать скидку, старую или новую цену на основе двух других значений. Просто отредактируйте два поля из трех (старая цена, новая цена, скидка) и нажмите соответствующую кнопку расчета.</small></li>
+                         <li><small><strong>Кнопки расчета цен:</strong> Позволяют автоматически рассчитать скидку, старую или новую цену на основе двух других значений.</small></li>
                     </ul>
                 </li>
-                 <li><strong>Сохраненные пресеты:</strong> Позволяет сохранять и загружать полный дизайн формы. Введите имя и нажмите "Сохранить", чтобы создать пресет. Выберите пресет из списка и нажмите "Загрузить", чтобы его применить.</li>
+                 <li><strong>Сохраненные пресеты:</strong> Позволяет сохранять и загружать полный дизайн формы.</li>
             </ul>
-
             <h4>Окно предпросмотра (справа)</h4>
              <ul>
                 <li><strong>Перемещение:</strong> Наведите курсор на элемент, зажмите левую кнопку мыши и перетаскивайте.</li>
-                <li><strong>Редактирование текста:</strong> Просто кликните на любой текст, чтобы начать его редактировать. Это также относится к ценам и скидке.</li>
-                <li><strong>Изменение размера:</strong> Кликните на изображение продукта, чтобы появились маркеры по углам. Потяните за них, чтобы изменить размер.</li>
+                <li><strong>Редактирование текста:</strong> Просто кликните на любой текст, чтобы начать его редактировать.</li>
+                <li><strong>Изменение размера:</strong> Кликните на изображение продукта, чтобы появились маркеры по углам. Потяните за них.</li>
             </ul>
-
             <h4>Анимация и сброс</h4>
              <ul>
-                <li><strong>Запустить анимацию:</strong> Переводит форму в режим просмотра, имитируя ввод данных и нажатие кнопки. Чтобы вернуться, подведите курсор к верху экрана и нажмите на появившийся баннер.</li>
-                <li><strong>Сбросить редактирование:</strong> Возвращает редактор к исходному состоянию (перезагружает страницу). Не удаляет сохраненные пресеты.</li>
+                <li><strong>Запустить анимацию:</strong> Переводит форму в режим просмотра, имитируя ввод данных.</li>
+                <li><strong>Сбросить редактирование:</strong> Возвращает редактор к исходному состоянию.</li>
             </ul>
         </div>
     </div>
 
     <div class="app-container">
+        <!-- ЛЕВАЯ ПАНЕЛЬ (Обновленный дизайн) -->
         <div class="controls">
             <div class="controls-header">
                  <h2>Настройки</h2>
@@ -65,27 +60,31 @@
                 </div>
             </div>
             
-            <!-- СТАТИЧНЫЙ ВЕРХНИЙ БЛОК -->
-            <label for="ctrl-region-input">Страна:</label>
-            <div id="region-input-wrapper">
-                <input type="text" id="ctrl-region-input" list="country-list" autocomplete="off">
-                <span id="clear-region-button" class="hidden">&times;</span>
+            <div class="control-section static-top">
+                <label for="ctrl-region-input">Страна:</label>
+                <div id="region-input-wrapper">
+                    <input type="text" id="ctrl-region-input" list="country-list" autocomplete="off" placeholder="Начните вводить название...">
+                    <span id="clear-region-button" class="hidden" title="Очистить">&times;</span>
+                </div>
+                <datalist id="country-list"></datalist>
             </div>
-            <datalist id="country-list"></datalist>
 
-            <!-- БЛОК 1: ТЕКСТОВЫЙ РЕДАКТОР -->
             <div class="accordion-item">
                 <h3 class="accordion-header active">Текстовый редактор <span class="accordion-arrow"></span></h3>
                 <div class="accordion-content active">
-                    <p>Кликните на текст в окне предпросмотра, чтобы его изменить.</p>
+                    <p class="helper-text">Кликните на текст в окне предпросмотра, чтобы его изменить.</p>
                     <div id="format-buttons" class="disabled">
-                        <button data-command="bold"><b>B</b></button>
-                        <button data-command="italic"><i>I</i></button>
-                        <button data-command="underline"><u>U</u></button>
-                        <button data-command="strikethrough"><s>S</s></button>
-                        <input type="color" id="ctrl-color" value="#333333" title="Цвет текста">
-                        <input type="number" id="ctrl-font-size" value="16" min="8" max="72" title="Размер шрифта">
-                        <select id="ctrl-font">
+                        <div class="format-group">
+                            <button data-command="bold" title="Жирный"><b>B</b></button>
+                            <button data-command="italic" title="Курсив"><i>I</i></button>
+                            <button data-command="underline" title="Подчеркнутый"><u>U</u></button>
+                            <button data-command="strikethrough" title="Зачеркнутый"><s>S</s></button>
+                        </div>
+                        <div class="format-group">
+                            <input type="color" id="ctrl-color" value="#333333" title="Цвет текста">
+                            <input type="number" id="ctrl-font-size" value="16" min="8" max="72" title="Размер шрифта">
+                        </div>
+                        <select id="ctrl-font" title="Шрифт">
                             <option value="Roboto">Roboto</option>
                             <option value="Open Sans">Open Sans</option>
                             <option value="Lato">Lato</option>
@@ -110,70 +109,83 @@
                 </div>
             </div>
 
-            <!-- БЛОК 2: ОБЪЕКТЫ -->
             <div class="accordion-item">
                 <h3 class="accordion-header">Объекты <span class="accordion-arrow"></span></h3>
                 <div class="accordion-content">
-                     <div class="text-actions">
-                        <button id="add-text-button">+ добавить текст</button>
-                        <button id="delete-text-button" class="danger" disabled>- удалить текст</button>
-                    </div>
-                    <button id="add-product-button">Добавить продукт</button>
-                    <div class="name-generation-group">
-                        <button id="generate-data-button">Подобрать имя и номер</button>
-                        <div class="gender-buttons-wrapper">
-                            <button id="generate-male-name-button" class="gender-button">Мужское имя</button>
-                            <button id="generate-female-name-button" class="gender-button">Женское имя</button>
-                        </div>
-                    </div>
-                    <button id="replace-flag-button">Заменить флаг</button>
-                    
-                    <div class="control-group">
-                        <label>Расчет цен:</label>
-                        <button id="calculate-discount-button" class="calculation-button">Рассчитать скидку</button>
-                        <button id="calculate-new-price-button" class="calculation-button">Рассчитать новую цену</button>
-                        <button id="calculate-old-price-button" class="calculation-button">Рассчитать старую цену</button>
+                     <div class="control-box text-actions">
+                        <button id="add-text-button" class="btn-primary">+ добавить текст</button>
+                        <button id="delete-text-button" class="btn-danger outline" disabled>- удалить текст</button>
                     </div>
 
-                    <div class="control-toggles">
-                        <label>Таймер: 
-                            <svg id="timer-toggle" class="control-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        </label>
-                        <label>Флаг: 
-                            <svg id="flag-toggle" class="control-icon dimmed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        </label>
+                    <div class="control-box image-actions">
+                        <button id="add-product-button" class="btn-secondary">🖼 Изменить продукт</button>
+                        <button id="replace-flag-button" class="btn-secondary">🚩 Заменить флаг</button>
                     </div>
-                    <label for="ctrl-timer-input">Начальное время таймера (ММ:СС):</label>
-                    <input type="text" id="ctrl-timer-input" value="09:59">
-                    <label for="ctrl-timer-font-size">Размер шрифта таймера (px):</label>
-                    <input type="number" id="ctrl-timer-font-size" value="40" min="12" max="120">
+
+                    <div class="control-box name-generation-group">
+                        <label>Генерация данных:</label>
+                        <button id="generate-data-button" class="btn-primary">Случайное имя и номер</button>
+                        <div class="gender-buttons-wrapper">
+                            <button id="generate-male-name-button" class="btn-secondary gender-button">Мужское имя</button>
+                            <button id="generate-female-name-button" class="btn-secondary gender-button">Женское имя</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-box control-group">
+                        <label>Расчет цен (автозаполнение):</label>
+                        <button id="calculate-discount-button" class="btn-secondary calculation-button">Рассчитать скидку</button>
+                        <button id="calculate-new-price-button" class="btn-secondary calculation-button">Рассчитать новую цену</button>
+                        <button id="calculate-old-price-button" class="btn-secondary calculation-button">Рассчитать старую цену</button>
+                    </div>
+
+                    <div class="control-box">
+                        <div class="control-toggles">
+                            <label class="toggle-label">Таймер: 
+                                <svg id="timer-toggle" class="control-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </label>
+                            <label class="toggle-label">Флаг: 
+                                <svg id="flag-toggle" class="control-icon dimmed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </label>
+                        </div>
+                        <div class="input-grid">
+                            <div>
+                                <label for="ctrl-timer-input">Время (ММ:СС):</label>
+                                <input type="text" id="ctrl-timer-input" value="09:59">
+                            </div>
+                            <div>
+                                <label for="ctrl-timer-font-size">Шрифт (px):</label>
+                                <input type="number" id="ctrl-timer-font-size" value="40" min="12" max="120">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- БЛОК 3: СОХРАНЕННЫЕ ПРЕСЕТЫ -->
             <div class="accordion-item">
                  <h3 class="accordion-header">Сохраненные пресеты <span class="accordion-arrow"></span></h3>
                  <div class="accordion-content">
-                    <label for="format-presets">Ваши пресеты:</label>
+                    <label for="format-presets">Ваши шаблоны:</label>
                     <select id="format-presets"></select>
-                    <div class="text-actions" style="gap: 5px; flex-wrap: wrap;">
-                        <button id="save-format-button" class="secondary" style="flex-grow: 1;">Сохранить</button>
-                        <button id="load-format-button" class="secondary" style="flex-grow: 1;">Загрузить</button>
-                        <button id="delete-format-button" class="secondary danger" style="flex-grow: 1;">Удалить</button>
+                    <div class="presets-actions">
+                        <button id="save-format-button" class="btn-primary">Сохранить</button>
+                        <button id="load-format-button" class="btn-secondary">Загрузить</button>
+                        <button id="delete-format-button" class="btn-danger outline">Удалить</button>
                     </div>
                 </div>
             </div>
             
-            <!-- СТАТИЧНЫЙ НИЖНИЙ БЛОК -->
-            <hr style="margin-top: 25px;">
-            <label for="ctrl-animation-duration">Хронометраж анимации (сек):</label>
-            <input type="number" id="ctrl-animation-duration" value="5" min="1">
-            <button id="ready-button">Запустить анимацию</button>
-            <button id="reset-button" class="secondary">Сбросить редактирование</button>
+            <div class="control-section bottom-actions">
+                <hr>
+                <label for="ctrl-animation-duration">Хронометраж анимации (сек):</label>
+                <input type="number" id="ctrl-animation-duration" value="5" min="1">
+                <button id="ready-button" class="btn-success">▶ Запустить анимацию</button>
+                <button id="reset-button" class="btn-danger outline">Сбросить редактирование</button>
+            </div>
             
-            <button id="help-button">?</button>
+            <button id="help-button" title="Справка">?</button>
         </div>
 
+        <!-- ПРАВАЯ ПАНЕЛЬ ПРЕДПРОСМОТРА (СТРУКТУРА ОСТАЛАСЬ ИДЕАЛЬНО ОРИГИНАЛЬНОЙ) -->
         <div class="preview">
             <div class="form-wrapper">
                 <div id="snap-guide"></div>
